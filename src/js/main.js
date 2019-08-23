@@ -129,7 +129,6 @@ const navContent = document.getElementById("navContent");
 const darkModeButton = document.getElementById("dark-mode-button");
 const darkModeCheckbox = document.getElementById("dark-mode-checkbox");
 showNavMenu.addEventListener("click", openNavMenu);
-showNavMenu.addEventListener("mouseover", openNavMenu);
 navContent.addEventListener("mouseleave", openNavMenu);
 darkModeButton.addEventListener("click", enableDarkMode);
 
@@ -137,7 +136,8 @@ function openNavMenu() {
   if (navContent.style.display === "block") {
     navContent.style.display = "none";
     showNavMenu.textContent = "☰";
-  } else {
+  }
+ else{
     navContent.style.display = "block";
     showNavMenu.textContent = "⛌";
   }

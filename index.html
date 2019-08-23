@@ -34,12 +34,13 @@
     /* nav bar */
     nav {
       top: 0;
-      left: 0;
+      /* left: 0; */
       position: fixed;
+      user-select: none;
     }
 
     nav #navContent {
-      width: 5em;
+      width: 6em;
       margin-top: 0.5em;
       box-shadow: 0 0 10px #85888c;
       text-align: center;
@@ -52,6 +53,7 @@
       font-size: 2em;
       border: none;
       background-color: transparent;
+      user-select: none;
     }
 
     .nav-button {
@@ -59,19 +61,19 @@
       cursor: pointer;
       border: none;
       outline: none;
-      padding: 0.5em 26% 0.5em 26%;
+      padding: 0.8em 30% 0.8em 20%;
       user-select: none;
       background-color: transparent;
     }
 
     .nav-button:hover {
-      background-color: rgba(110, 114, 116, 0.26);
-      color: #fff;
+      font-size: 0.8em;
     }
 
+
     #dark-mode-button {
-      padding-left: 8%;
-      padding-right: 8%;
+      padding-left: 15%;
+      padding-right: 15%;
     }
 
     #dark-mode-checkbox {
@@ -416,8 +418,8 @@
   <nav>
     <button id="nav-open">&#9776;</button>
     <span id="navContent">
-      <button type="button" id="pwa-install" class="nav-button">Install</button>
       <button type="button" id="dark-mode-button" class="nav-button">Dark mode</button>
+      <button type="button" id="pwa-install" class="nav-button">Install</button>
     </span>
 
     <input type="checkbox" id="dark-mode-checkbox">
