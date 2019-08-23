@@ -1,7 +1,7 @@
 # Conversion Calculator
 
 Unit converter for Metric ↔ US/Imperial units and mg/dl to mmol/l.  
-<a href="https://cedmpi.github.io/" target="_blank">Site</a>
+[Site](https://cedmpi.github.io/)
 ## Features
 - weight, length, height converter
 - HbA1c into average blood glucose 
