@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Diabetes Conversion Calculator</title>
+  <!-- <link href="src/styles/style.css" rel="stylesheet"> -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="DiaCalc">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="icon" type="image/png" sizes="32x32" href="/src/images/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/src/images/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/src/images/icons/app-icon-144x144.png" sizes="144x143">
+  <meta name="Description"
+    content="eAG/A1C Conversion Calculator,HbA1c to average blood glucose, mg/dl to mmol/l converter, weight liquid lenght converter   ">
+  <style>
+    /* css cache update */
+    :root {
+      --main-bg-color: rgba(224, 224, 224, 0.349);
+      --content-bg-color: #fff;
+      --font-color: #000;
+      --input-bg-color: #fff;
+    }
+
+    /* #181a1b; */
+    body {
+      background-color: var(--main-bg-color);
+      color: var(--font-color);
+    }
+
+    /* nav bar */
+    nav {
+      top: 0;
+      left: 0;
+      position: fixed;
+    }
+
+    nav #navContent {
+      width: 5em;
+      margin-top: 0.5em;
+      box-shadow: 0 0 10px #85888c;
+      text-align: center;
+      display: none;
+    }
+
+    #nav-open {
+      color: var(--font-color);
+      cursor: pointer;
+      font-size: 2em;
+      border: none;
+      background-color: transparent;
+    }
+
+    .nav-button {
+      color: var(--font-color);
+      cursor: pointer;
+      border: none;
+      outline: none;
+      padding: 0.5em 26% 0.5em 26%;
+      user-select: none;
+      background-color: transparent;
+    }
+
+    .nav-button:hover {
+      background-color: rgba(110, 114, 116, 0.26);
+      color: #fff;
+    }
+
+    #dark-mode-button {
+      padding-left: 8%;
+      padding-right: 8%;
+    }
+
+    #dark-mode-checkbox {
+      display: none;
+    }
+
+    .nav-button:nth-child(odd) {
+      border-bottom: rgba(0, 0, 0, 0.452) 1px solid;
+    }
+
+    /*  ---- converter  ----  */
+    .converter {
+      margin: 3em auto 0 auto;
+      text-align: center;
+    }
+
+    .converter>section {
+      background-color: var(--content-bg-color);
+      border-radius: 0.5rem;
+      padding-bottom: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .converter button {
+      cursor: pointer;
+      color: var(--font-color);
+    }
+
+    .converter input[type="number"]::-webkit-inner-spin-button,
+    .converter input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      /* -moz-appearance: none; */
+      appearance: none;
+    }
+
+    .converter input[type="number"] {
+      /* -webkit-appearance: textfield; */
+      -moz-appearance: textfield;
+      /* appearance: textfield; */
+    }
+
+    input,
+    select {
+      background-color: var(--input-bg-color);
+      color: var(--font-color);
+    }
+
+    footer {
+      width: 95%;
+      margin: 18% auto 0 auto;
+      background-color: var(--content-bg-color);
+      border-radius: 0.5rem;
+    }
+
+    footer>details {
+      margin-top: 1em;
+    }
+
+    /* ---- blood measurement converter   ---- */
+
+    .blood-measurement-converter-input {
+      display: flex;
+      justify-content: center;
+    }
+
+    .blood-measurement-converter-input>input {
+      padding-top: 0.8rem;
+      padding-bottom: 0.8rem;
+      width: 5.15rem;
+      text-align: center;
+    }
+
+    #average-percent-increase {
+      display: none;
+      box-shadow: 0 0 0.1rem #928b8b;
+      width: 18rem;
+      margin: 1rem auto;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+
+    /* ---- HbA1c calculator  ----*/
+    #input-hba1c {
+      width: 8rem;
+      margin-left: 1rem;
+    }
+
+    #output-values {
+      margin: 2rem auto;
+      padding-top: 0.1px;
+      padding-bottom: 0.1px;
+      width: 17.5rem;
+      box-shadow: 0 0 0.5rem #928b8b;
+    }
+
+    .calculator-hba1c {
+      text-align: center;
+    }
+
+    #output-values {
+      /* visibility: hidden; */
+      display: none;
+    }
+
+    /* ---- unit converter  ---- */
+
+    .unit-converter {
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    .unit-conv-input {
+      display: flex;
+      justify-content: center;
+    }
+
+    .unit-conv-input>div>input {
+      padding-top: 0.8rem;
+      padding-bottom: 0.8rem;
+      width: 5.15rem;
+      text-align: center;
+      /* background-color: #f7f7f7; */
+      /* border-right-color: rgb(201, 201, 201); */
+      /* box-shadow: none; */
+      border-bottom: none;
+    }
+
+    .unit-conv-input select {
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      width: 5.52rem;
+    }
+
+    .first-unit-div {
+      margin-left: 3rem;
+    }
+
+    /* converter history log */
+    #converter-history {
+      visibility: hidden;
+    }
+
+    .historyflex h3 {
+      display: inline-block;
+      margin-left: 2.8em;
+    }
+
+    #close-history {
+      border: none;
+      background-color: transparent;
+      float: right;
+      margin-top: 2em;
+      margin-right: 1em;
+    }
+
+    .show-converter-history {
+      margin-top: -1em;
+    }
+
+    .reset-history {
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 0.5em;
+    }
+
+    .history-button-style {
+      font-size: 2.5em;
+      background-color: transparent;
+      border: none;
+    }
+
+    .history-button-style:hover {
+      background-color: #18191a5d;
+      border-radius: 10%;
+    }
+
+    #show-history-button {
+      font-size: 2.5em;
+      background-color: transparent;
+      border: none;
+      transition: all 2s ease;
+    }
+
+    #show-history-button:hover {
+      transform: rotate(-100deg);
+    }
+
+    #history-value-list {
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    #history-value-list li {
+      margin: 0.8em 1.2em 0.8px 1.2em;
+    }
+
+    #history-value-list li:nth-child(odd) {
+      background-color: rgba(196, 191, 191, 0.185);
+    }
+
+    /* general  */
+
+    .converter input:invalid {
+      box-shadow: none;
+    }
+
+    h3 {
+      padding-top: 0.5em;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    label {
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    ::placeholder {
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+    }
+
+    .equation-sign {
+      margin: 10px 5px 0 5px;
+    }
+
+    .reset-button {
+      padding: 6px 10px 25px 10px;
+      border: none;
+      outline: none;
+      background-color: transparent;
+      visibility: hidden;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgb(185, 185, 185);
+      /* padding: 1px 6px; */
+      margin: 0.5rem 0 auto 1.2rem;
+      height: 23px;
+    }
+
+    .reset-button:active {
+      background-color: rgb(216, 216, 216);
+    }
+
+    .reset-button:focus {
+      border: 0.05rem dotted #343a40;
+    }
+
+    #calculator-percent,
+    #hba1c-value,
+    #exchange-percent {
+      text-decoration: underline;
+    }
+
+    /* vertical line */
+    .vl {
+      border-right: 2px solid#343a40;
+      margin: 0 0.8rem 0 0.8rem;
+    }
+
+    .accessible-elem {
+      clip: rect(1px 1px 1px 1px);
+      /* IE 6/7 */
+      clip: rect(1px, 1px, 1px, 1px);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      /* added line */
+      width: 1px;
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted black;
+      cursor: help;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tooltip .tooltiptext::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #555 transparent transparent transparent;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* for wide screen */
+    @media only screen and (min-width: 750px) {
+      .converter {
+        width: 25em;
+      }
+    }
+
+    @media only screen and (min-width: 1500px) {
+      #converter-history {
+        margin: -106% -130% 0 130%;
+        box-shadow: 0 0 0.5rem #928b8b;
+      }
+    }
+
+    @media only screen and (min-width: 900px) {
+      footer {
+        width: 25%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <button id="nav-open">&#9776;</button>
+    <span id="navContent">
+      <button type="button" id="pwa-install" class="nav-button">Install</button>
+      <button type="button" id="dark-mode-button" class="nav-button">Dark mode</button>
+    </span>
+
+    <input type="checkbox" id="dark-mode-checkbox">
+    <label for="dark-mode" class="accessible-elem">Dark mode</label>
+  </nav>
+
+
+
+  <main class="converter">
+
+    <section class="blood-measurement-converter">
+      <h3>mg/dl &harr; mmol/l</h3>
+
+      <div class="blood-measurement-converter-input">
+        <label for="mg/dl-converter" class="accessible-elem">mg/dl</label>
+        <input placeholder="mg/dl" id="mg/dl-converter" type="number" min="1">
+        <span class="equation-sign"> = </span>
+        <label for="mmol/l-converter" class="accessible-elem">mmol/l</label>
+        <input placeholder="mmol/l" id="mmol/l-converter" type="number">
+      </div>
+
+
+      <p id="average-percent-increase">
+        blood sugar is ~ <span id="bg-increase-percentage"></span> % above normal
+        <span class="tooltip">
+          *<span class="tooltiptext">Normal average: 85 mg/dl <br> 4.7 mmol/l</span></span> </p>
+
+    </section>
+
+    <section class="calculator-hba1c">
+      <h3>A1C to average blood glucose </h3>
+
+
+      <label for="input-hba1c">HbA1c </label>
+      <input placeholder="Enter HbA1c" id="input-hba1c" type="number" min="0">
+      <button id="reset-a1c-input" type="reset" class="reset-button">&#9587</button>
+
+
+      <div id="output-values">
+
+        <p>A1C of <span id="hba1c-value"> </span> <br> is an estimated Average Glucose of </p>
+
+        <output for="input-hba1c"> <span id="mgdl-value"></span> <span class="vl"></span> <span
+            id="mmoll-value"></span></output>
+
+        <p id="calculator-average-percent">
+          blood glucose on average: <br> <span id="calculator-percent"> </span> above normal <span class="tooltip">
+            *<span class="tooltiptext">Normal average: 85 mg/dl <br> 4.7 mmol/l</span></span> </p>
+      </div>
+
+    </section>
+
+    <!-- weight converter -->
+    <section class="unit-converter">
+
+      <h3> weight converter </h3>
+      <div class="unit-conv-input">
+
+        <div class="first-unit-div">
+          <label for="first-weight-input" class="accessible-elem">first input</label>
+          <input placeholder="..." id="first-weight-input" min="0" type="number">
+          <div>
+            <select name="" id="first-weight-select">
+              <option value="kilogram">Kilogram</option>
+              <option value="pound">Pound</option>
+              <option value="ounce">Ounce</option>
+              <option value="gram">Gram</option>
+              <option value="cup">cup (US)</option>
+              <option value="tablespoon">tablespoon (US)</option>
+              <option value="teaspoon">teaspoon (US)</option>
+            </select>
+            <label for="first-weight-select" class="accessible-elem">weight select one</label>
+          </div>
+        </div>
+        <span class="equation-sign"> &asymp; </span>
+        <div>
+          <label for="secound-weight-input" class="accessible-elem">secound input</label>
+          <input placeholder="..." type="number" id="secound-weight-input" min="0" lang="en">
+          <div>
+            <select name="" id="secound-weight-select">
+              <option value="pound">Pound</option>
+              <option value="ounce">Ounce</option>
+              <option value="cup">cup (US)</option>
+              <option value="tablespoon">tablespoon (US)</option>
+              <option value="teaspoon">teaspoon (US)</option>
+              <option value="kilogram">Kilogram</option>
+              <option value="gram">Gram</option>
+            </select>
+            <label for="secound-weight-select" class="accessible-elem">weight select two</label>
+          </div>
+        </div>
+        <button id="reset-weight-input" type="reset" class="reset-button">&#9587</button>
+        <label for="reset-weight-input" class="accessible-elem">reset input</label>
+      </div>
+
+
+    </section>
+
+    <!-- liquid converter -->
+    <section class="unit-converter">
+
+      <h3> liquid converter </h3>
+      <div class="unit-conv-input">
+
+        <div class="first-unit-div">
+          <label for="first-liquid-input" class="accessible-elem">first input</label>
+          <input placeholder="..." type="number" id="first-liquid-input" min="0" lang="en">
+          <div>
+            <select name="" id="first-liquid-select">
+              <option value="litre">litre</option>
+              <option value="millilitre">millilitre</option>
+              <option value="gallon">gallon (US)</option>
+              <option value="quart">quart (US)</option>
+              <option value="cup">cup (US)</option>
+              <option value="ounce">fluid ounce (US)</option>
+            </select>
+            <label for="first-liquid-select" class="accessible-elem"> liquid select one</label>
+          </div>
+        </div>
+        <span class="equation-sign"> &asymp; </span>
+        <div>
+          <label for="secound-liquid-input" class="accessible-elem">secound input</label>
+          <input placeholder="..." type="number" id="secound-liquid-input" min="0" lang="en">
+          <div>
+            <select name="" id="secound-liquid-select">
+              <option value="gallon">gallon (US)</option>
+              <option value="cup">cup (US)</option>
+              <option value="ounce">fluid ounce (US)</option>
+              <option value="quart">quart (US)</option>
+              <option value="litre">litre</option>
+              <option value="millilitre">millilitre</option>
+            </select>
+            <label for="secound-liquid-select" class="accessible-elem">liquid select two</label>
+          </div>
+        </div>
+        <button id="reset-liquid-input" type="reset" class="reset-button">&#9587</button>
+        <label for="reset-liquid-input" class="accessible-elem">reset input</label>
+
+      </div>
+
+
+    </section>
+
+    <!-- length converter -->
+    <section class="unit-converter">
+
+      <h3> length converter </h3>
+      <div class="unit-conv-input">
+
+        <div class="first-unit-div">
+          <label for="first-length-input" class="accessible-elem">first input</label>
+          <input placeholder="..." type="number" id="first-length-input" min="0" lang="en">
+          <div>
+            <select name="" id="first-length-select">
+              <option value="metre">metre</option>
+              <option value="kilometre">kilometre</option>
+              <option value="centimetre">centimetre</option>
+              <option value="millimetre">millimetre</option>
+              <option value="mile">mile</option>
+              <option value="feet">feet</option>
+              <option value="inch">inch</option>
+            </select>
+            <label for="first-length-select" class="accessible-elem">length select one</label>
+          </div>
+        </div>
+        <span class="equation-sign"> &asymp; </span>
+        <div>
+          <label for="secound-length-input" class="accessible-elem">secound input</label>
+          <input placeholder="..." type="number" id="secound-length-input" min="0" lang="en">
+          <div>
+            <select name="" id="secound-length-select">
+              <option value="feet">feet</option>
+              <option value="mile">mile</option>
+              <option value="inch">inch</option>
+              <option value="kilometre">kilometre</option>
+              <option value="metre">metre</option>
+              <option value="centimetre">centimetre</option>
+              <option value="millimetre">millimetre</option>
+            </select>
+            <label for="secound-length-select" class="accessible-elem">select lenght two</label>
+          </div>
+        </div>
+        <button id="reset-length-input" type="reset" class="reset-button">&#9587</button>
+        <label for="reset-length-input" class="accessible-elem">reset input</label>
+      </div>
+    </section>
+
+
+    <div class="show-converter-history">
+      <button id="show-history-button" class="" type="button"> &#9716; </button>
+      <br>
+      <label for="show-history-button">History</label>
+    </div>
+
+
+    <section id="converter-history">
+
+      <span class="historyflex">
+        <h3> Converter History</h3>
+        <button id="close-history" type="button" class="">&#9587</button>
+        <label class="accessible-elem" for="close-history">close history</label>
+      </span>
+      <hr>
+      <div>
+        <ul id="history-value-list"></ul>
+      </div>
+
+      <span class="reset-history">
+        <span>
+          <button id="reset-history-button" class="history-button-style" type="reset" class="">&#128465;</button>
+          <br>
+          <label for="reset-history-button">delete</label>
+        </span>
+      </span>
+
+    </section>
+  </main>
+
+
+  <footer>
+
+    <details>
+      <summary>A1C formula</summary>
+      <p> (35.6 × HgbA1C) – 77.3 mg/dl <sup> <a href="https://www.ncbi.nlm.nih.gov/pubmed/11815495" target="_blank"
+            rel="noreferrer">[1]</a></sup>
+      </p>
+
+    </details>
+    <details>
+      <summary>Normal fasting blood sugar </summary>
+      <p>Adult: 85 mg/dl (4.7 mmol/l) <sup> <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5557842/"
+            target="_blank" rel="noreferrer">[2]</a> </sup> </p>
+    </details>
+
+  </footer>
+  <script src="src/js/main.js"></script>
+  <script src="src/js/unit-converter.js"></script>
+
+</body>
+
+</html>
