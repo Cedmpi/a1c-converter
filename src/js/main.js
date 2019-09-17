@@ -12,17 +12,7 @@ window.addEventListener("beforeinstallprompt", event => {
   deferredPrompt = event;
 });
 
-const installPwaButton = document.getElementById("pwa-install");
 
-installPwaButton.addEventListener("click", event => {
-  deferredPrompt.prompt();
-
-  deferredPrompt.userChoice.then(choiceResult => {
-    if (choiceResult.outcome === "accepted") {
-    }
-    deferredPrompt = null;
-  });
-});
 
 window.addEventListener("appinstalled", event => {});
 
