@@ -31,6 +31,13 @@
       color: var(--font-color);
     }
 
+    input {
+      padding-top: 0.8rem;
+      padding-bottom: 0.8rem;
+      width: 5.15rem;
+      text-align: center;
+    }
+
     /* nav bar */
     nav {
       top: 0;
@@ -133,20 +140,6 @@
       margin-top: 1em;
     }
 
-    /* ---- blood measurement converter   ---- */
-
-    .blood-measurement-converter-input {
-      display: flex;
-      justify-content: center;
-    }
-
-    .blood-measurement-converter-input>input {
-      padding-top: 0.8rem;
-      padding-bottom: 0.8rem;
-      width: 5.15rem;
-      text-align: center;
-    }
-
     #average-percent-increase {
       display: none;
       box-shadow: 0 0 0.1rem #928b8b;
@@ -161,6 +154,12 @@
       width: 8rem;
       margin-left: 1rem;
     }
+
+    #hba1c-percent-input {
+      margin-left: 3.4em;
+    }
+
+
 
     #output-values {
       margin: 2rem auto;
@@ -189,17 +188,6 @@
     .unit-conv-input {
       display: flex;
       justify-content: center;
-    }
-
-    .unit-conv-input>div>input {
-      padding-top: 0.8rem;
-      padding-bottom: 0.8rem;
-      width: 5.15rem;
-      text-align: center;
-      /* background-color: #f7f7f7; */
-      /* border-right-color: rgb(201, 201, 201); */
-      /* box-shadow: none; */
-      border-bottom: none;
     }
 
     .unit-conv-input select {
@@ -420,14 +408,12 @@
     <button id="nav-open">&#9776;</button>
     <span id="navContent">
       <button type="button" id="dark-mode-button" class="nav-button">Dark mode</button>
-    
+
     </span>
 
     <input type="checkbox" id="dark-mode-checkbox">
     <label for="dark-mode" class="accessible-elem">Dark mode</label>
   </nav>
-
-
 
   <main class="converter">
 
@@ -451,25 +437,33 @@
     </section>
 
     <section class="calculator-hba1c">
-      <h3>A1C to average blood glucose </h3>
+      <h3>HbA1c to eAG converter </h3>
 
+      <div class="hba1c-converter-input">
 
-      <label for="input-hba1c">HbA1c </label>
-      <input placeholder="Enter HbA1c" id="input-hba1c" type="number" min="0">
-      <button id="reset-a1c-input" type="reset" class="reset-button">&#9587</button>
+        <input placeholder="percent" id="hba1c-percent-input" type="number" min="0">
+        <span class="equation-sign"> = </span>
+        <input placeholder="mmol/mol" id="hba1c-mmoll-input" type="number" min="0">
+        <button id="reset-a1c-input" type="reset" class="reset-button">&#9587</button>
+        <br>
 
-
+        <label for="hba1c-percent-input" class="accessible-elem">HbA1c percent</label> 
+        <label for="hba1c-mmoll-input"   class="accessible-elem"> HbA1c mmol/mol</label>
+      </div>
       <div id="output-values">
 
-        <p>A1C of <span id="hba1c-value"> </span> <br> is an estimated Average Glucose of </p>
+        <p style="line-height: 1.4em">HbA1c of <br> <span id="hba1c-value-percent"></span>
+          <span class="vl"></span> <span id="hba1c-value-mmoll"></span><small> mmol/mol</small> <br> is an
+          estimated average glucose of </p>
 
         <output for="input-hba1c"> <span id="mgdl-value"></span> <span class="vl"></span> <span
             id="mmoll-value"></span></output>
 
         <p id="calculator-average-percent">
-          blood glucose on average: <br> <span id="calculator-percent"> </span> above normal <span class="tooltip">
+          blood glucose on average: <br> <span id="hba1c-percent-increase"> </span> above normal <span class="tooltip">
             *<span class="tooltiptext">Normal average: 85 mg/dl <br> 4.7 mmol/l</span></span> </p>
       </div>
+
 
     </section>
 
