@@ -1,9 +1,9 @@
 const CACHE = "precach";
 
 const precacheFiles = [
-  "/index.html",
-  "src/js/main.js",
-  "src/js/unit-converter.js"
+  "https://cedmpi.github.io/a1c-converter/index.html",
+  "https://cedmpi.github.io/a1c-converter/src/js/main.js",
+  "https://cedmpi.github.io/a1c-converter/src/js/unit-converter.js"
 ];
 
 /* array of regex of paths that should go network first */
