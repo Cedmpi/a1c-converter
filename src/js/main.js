@@ -1,6 +1,6 @@
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("https://cedmpi.github.io/a1c-converter/src/sw.js");
+    navigator.serviceWorker.register("https://cedmpi.github.io/a1c-converter/sw.js");
   });
 }
 
