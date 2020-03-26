@@ -186,7 +186,7 @@ const cssVariableNames = [
   "--font-color"
 ];
 /*const cssVariableColor = ["#313233", "rgb(24, 26, 27)", "#181a1b", "#fff"];*/
-const cssVariableColor = ["rgba(224, 224, 224, 0.349)","#fff","#000","#fff"];
+const cssVariableColor = ["rgba(224, 224, 224, 0.349)","#fff","#fff","#000"];
                           
 function changeTheme(name, color) {
   const max = cssVariableNames.length;
