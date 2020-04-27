@@ -406,7 +406,7 @@ const lenghtSelectCombination = {
   },
   //  kilometre to feet
   kilometrefeet: x => {
-    return (x * 3280).toFixed(2); 
+    return (x / 0.03048).toFixed(2); 
   },
   //  kilometre to inch
   kilometreinch: x => {
@@ -430,7 +430,7 @@ const lenghtSelectCombination = {
   },
   // metre to feet
   metrefeet: x => {
-    return (x * 3.28).toFixed(2);
+    return (x / 0.3048).toFixed(2);
   },
   // metre to inch
   metreinch: x => {
@@ -453,7 +453,7 @@ const lenghtSelectCombination = {
     return (x / 160934.4).toFixed(8);
   }, // centimetre feet
   centimetrefeet: x => {
-    return (x * 0.0328).toFixed(4);
+    return (x / 30.48).toFixed(4);
   }, // centimetre to inch
   centimetreinch: x => {
     return (x / 2.54).toFixed(2);
@@ -494,19 +494,19 @@ const lenghtSelectCombination = {
   },
   // feet to  kilometre
   feetkilometre: x => {
-    return (x / 3048).toFixed(2);
+    return (x * 0.0003048).toFixed(2);
   },
   // feet to metre
   feetmetre: x => {
-    return (x / 3.048).toFixed(2);
+    return (x * 0.3048).toFixed(2);
   },
   // feet to  centimetre
   feetcentimetre: x => {
-    return (x / 0.03048).toFixed(2);
+    return (x * 30.48).toFixed(2);
   },
   // feet to millimetre
   feetmillimetre: x => {
-    return (x / 0.003048).toFixed(1);
+    return (x * 3.048).toFixed(1);
   },
   // feet to mile
   feetmile: x => {
@@ -558,7 +558,7 @@ const lenghtSelectCombination = {
   },
   // millimetre to feet
   millimetrefeet: x => {
-    return (x * 0.00328).toFixed(1);
+    return (x  / 304.8).toFixed(1);
   },
   // millimetre to inch
   millimetreinch: x => {
