@@ -1,6 +1,6 @@
 # Conversion Calculator
 
-Unit converter for Metric ↔ US/Imperial units and mg/dl to mmol/l.  
+Diabetes Unit converter and Metric ↔ US/Imperial units conversion. 
 [Site](https://cedmpi.github.io/a1c-converter/)
 ## Features
 - weight, length, height converter
