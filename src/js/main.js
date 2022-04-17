@@ -58,7 +58,7 @@ const a1cResetButton = document.getElementById("reset-a1c-input");
 const inputHba1cPercent = document.getElementById("hba1c-percent-input");
 const inputHba1cMmoll = document.getElementById("hba1c-mmoll-input");
 
-const normalBloodSugar = 85;
+const normalBloodSugar = 83;
 
 inputHba1cPercent.addEventListener("keyup", convertHba1cPercentInput);
 inputHba1cMmoll.addEventListener("keyup", convertHba1cMmollInput);
