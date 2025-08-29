@@ -1,7 +1,6 @@
 {
   "name": "Diabetes converter",
   "short_name": "Dicon",
-
   "icons": [
     {
       "src": "https://cedmpi.github.io/a1c-converter/src/images/icons/app-icon-96x96.png",
@@ -24,12 +23,12 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "https://cedmpi.github.io/a1c-converter/index.html",
-  "scope": "https://cedmpi.github.io/a1c-converter/",
+  "start_url": "/a1c-converter/index.html",
+  "scope": "/a1c-converter/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#fff",
   "theme_color": "#3f51b5",
-  "desrciption": "A simple Calculator, for diabetes related conversions",
+  "description": "Calculator for diabetes related conversions",
   "dir": "ltr"
 }
