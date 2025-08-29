@@ -1,3 +1,5 @@
+import { formatNumber } from "./utils.js";
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("https://cedmpi.github.io/a1c-converter/sw.js");
@@ -12,7 +14,7 @@ window.addEventListener("beforeinstallprompt", event => {
   deferredPrompt = event;
 });
 
-window.addEventListener("appinstalled", event => {});
+window.addEventListener("appinstalled", event => { });
 
 /* mg/dl <--> mmol/l converter*/
 const inputMgdl = document.getElementById("mg/dl-converter");
@@ -38,7 +40,7 @@ const averagePercentIncrease = document.getElementById(
   "average-percent-increase"
 );
 /* percentage increase  mmol/l <--> mg/dl   */
-let percentageIncreaseAboveNormal = function() {
+let percentageIncreaseAboveNormal = function () {
   let number = inputMgdl.value;
   let percentageIncrease = ((number / normalBloodSugar) * 100 - 100).toFixed(0);
   if (number >= 100) {
@@ -150,55 +152,48 @@ function bloodSugarPercentIncrease(averageValue) {
   }
 }
 
-// nav menu
-const showNavMenu = document.getElementById("nav-open");
-const navContent = document.getElementById("navContent");
-const darkModeButton = document.getElementById("dark-mode-button");
-const darkModeCheckbox = document.getElementById("dark-mode-checkbox");
-showNavMenu.addEventListener("click", openNavMenu);
-navContent.addEventListener("mouseleave", openNavMenu);
-darkModeButton.addEventListener("click", enableDarkMode);
 
-function openNavMenu() {
-  if (navContent.style.display === "block") {
-    navContent.style.display = "none";
-    showNavMenu.textContent = "☰";
-  } else {
-    navContent.style.display = "block";
-    showNavMenu.textContent = "⛌";
-  }
+const carbsInput = document.getElementById("carb-input");
+const proteinInput = document.getElementById("protein-input");
+
+const output = document.getElementById("output-values-nutrition");
+const outputEstimatedInlsulinUnit = document.getElementById("estimated-insulin-unit");
+const outputEstimatedGlucoseIncrease = document.getElementById("estimated-glucose-increase");
+
+const oneUnitRegularInsulinDecreaseBgMgdl = 40;
+const oneGramOfCarbsIncreaseBgMgdl = 5;
+
+const oneUnitRegularCoversProteinGrams = 14;
+
+function outputValuesNutrition() {
+  let carbs = carbsInput.value > 0 ? carbsInput.value : 0;
+  let protein = proteinInput.value > 0 ? proteinInput.value : 0;
+
+  const increaseFromCarbs = carbs * oneGramOfCarbsIncreaseBgMgdl;
+
+  const unitForProtein = oneUnitRegularCoversProteinGrams / protein ? protein / oneUnitRegularCoversProteinGrams : 0;
+  const unitForCarbs = increaseFromCarbs / oneUnitRegularInsulinDecreaseBgMgdl;
+
+  const increaseFromProtein = unitForProtein * oneUnitRegularInsulinDecreaseBgMgdl;
+
+  const totalUnits = unitForProtein + unitForCarbs;
+
+  const totalIncrease = formatNumber(increaseFromCarbs + increaseFromProtein, 1);
+
+  outputEstimatedGlucoseIncrease.innerHTML =
+    `Glucose increase: <b>${totalIncrease} mg/dl</b> 
+  <small>(${(totalIncrease / 18).toFixed(1)} mmol/l)</small>`;
+
+  outputEstimatedInlsulinUnit.innerHTML = `Total R-Units: <b>${totalUnits.toFixed(1)} R</b>
+  <small>
+  (carbs: ${unitForCarbs.toFixed(1)} R)
+  (protein: ${unitForProtein.toFixed(1)} R)
+  </small>
+  `;
+
+  output.style.visibility = "visible";
 }
 
-function enableDarkMode() {
-  if (!darkModeCheckbox.checked) {
-    darkModeCheckbox.checked = true;
-    changeTheme(cssVariableNames, cssVariableColor);
-  } else {
-    darkModeCheckbox.checked = false;
-    changeTheme(cssVariableNames, "");
-  }
-}
+carbsInput.addEventListener("keyup", outputValuesNutrition);
+proteinInput.addEventListener("keyup", outputValuesNutrition);
 
-const cssVariableNames = [
-  "--main-bg-color",
-  "--content-bg-color",
-  "--input-bg-color",
-  "--font-color"
-];
-/*const cssVariableColor = ["#313233", "rgb(24, 26, 27)", "#181a1b", "#fff"];*/
-const cssVariableColor = ["rgba(224, 224, 224, 0.349)","#fff","#fff","#000"];
-                          
-function changeTheme(name, color) {
-  const max = cssVariableNames.length;
-
-  if (darkModeCheckbox.checked) {
-    for (let i = 0; i < max; i++) {
-      document.body.style.setProperty(`${name[i]}`, `${color[i]}`);
-    }
-  }
-  if (!darkModeCheckbox.checked) {
-    for (let i = 0; i < max; i++) {
-      document.body.style.removeProperty(`${name[i]}`);
-    }
-  }
-}
