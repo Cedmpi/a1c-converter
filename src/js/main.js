@@ -2,7 +2,7 @@ import { formatNumber } from "./utils.js";
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("https://cedmpi.github.io/a1c-converter/sw.js");
+    navigator.serviceWorker.register("/sw.js");
   });
 }
 
