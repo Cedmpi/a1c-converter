@@ -72,7 +72,7 @@ function convertHba1cPercentInput() {
     a1cResetButton.style.visibility = "visible";
     inputHba1cMmoll.value = convertA1cPercentToA1cMmoll().toFixed(2);
     convertAverageBloodSugarFromHba1c(
-      (HbA1c = inputHba1cPercent.valueAsNumber)
+      inputHba1cPercent.valueAsNumber
     );
   } else {
     resetHba1cField();
@@ -84,7 +84,7 @@ function convertHba1cMmollInput() {
     a1cResetButton.style.visibility = "visible";
     inputHba1cPercent.value = convertA1cMmollToA1cPercent().toFixed(1);
     convertAverageBloodSugarFromHba1c(
-      (HbA1c = inputHba1cPercent.valueAsNumber)
+      inputHba1cPercent.valueAsNumber
     );
   } else {
     resetHba1cField();
