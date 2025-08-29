@@ -85,11 +85,12 @@
 
     .converter input[type="number"] {
       -moz-appearance: textfield;
+      appearance: textfield;
     }
 
     /* Cards */
     .converter {
-      margin: 5em auto 2em auto;
+      margin: 2em auto;
       text-align: center;
       max-width: 34rem;
       padding: 0 1rem;
@@ -108,6 +109,7 @@
     .hba1c-converter-input,
     .unit-conv-input {
       display: flex;
+      position: relative;
       align-items: center;
       justify-content: center;
       gap: 1rem;
@@ -151,6 +153,12 @@
     }
 
     .reset-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      right: 0;
+      bottom: 0;
       visibility: hidden;
       border: 1px solid #cdd3dc;
       background-color: #eef2f7;
@@ -158,7 +166,7 @@
       border-radius: var(--radius);
       padding: 0.25rem 0.5rem;
       cursor: pointer;
-      height: auto;
+      height: 2rem;
     }
 
     .reset-button:hover {
@@ -255,11 +263,23 @@
       flex-direction: column;
       align-items: center;
       visibility: hidden;
+      margin-top: 1rem;
+    }
+
+    .unit-converter .reset-button {
+      bottom: unset;
+      top: 0;
     }
 
     @media (max-width: 420px) {
       :root {
         --control-width: 7rem;
+      }
+
+      .reset-button {
+        right: -1rem;
+        background-color: transparent;
+        border: none;
       }
     }
 
@@ -272,7 +292,7 @@
       .hba1c-converter-input,
       .unit-conv-input {
         flex-wrap: wrap;
-      }      
+      }
     }
   </style>
 </head>
@@ -290,6 +310,9 @@
         <span class="equation-sign"> = </span>
         <label for="mmol/l-converter" class="accessible-elem">mmol/l</label>
         <input placeholder="mmol/l" id="mmol/l-converter" type="number">
+
+        <button id="reset-blood-measurement-converter" type="reset" class="reset-button">&#9587</button>
+
       </div>
 
 
@@ -309,12 +332,14 @@
         <input placeholder="percent" id="hba1c-percent-input" type="number" min="0">
         <span class="equation-sign"> = </span>
         <input placeholder="mmol/mol" id="hba1c-mmoll-input" type="number" min="0">
-        <button id="reset-a1c-input" type="reset" class="reset-button">&#9587</button>
         <br>
 
         <label for="hba1c-percent-input" class="accessible-elem">HbA1c percent</label>
         <label for="hba1c-mmoll-input" class="accessible-elem"> HbA1c mmol/mol</label>
+
+        <button id="reset-a1c-input" type="reset" class="reset-button">&#9587</button>
       </div>
+
       <div id="output-values">
 
         <p style="line-height: 1.4em">HbA1c of <br> <span id="hba1c-value-percent"></span>
@@ -336,8 +361,8 @@
     <section class="nutrition-converter">
       <h3>Blood Sugar increase of Carbs and Protein</h3>
 
-      <form class="nutrition-form">
-        <div style="display: flex; justify-content: center; gap: 1rem;">
+      <div class="nutrition-form">
+        <div style="display: flex; justify-content: center; gap: 1rem; position: relative;">
 
           <div class="nutrition-input-container">
             <label for="carb-input" class="">Carbohydrates</label>
@@ -348,6 +373,7 @@
             <label for="protein-input" class="">Protein</label>
             <input placeholder="grams..." id="protein-input" type="number">
           </div>
+          <button id="reset-nutrition-input" type="reset" class="reset-button">&#9587</button>
         </div>
 
         <output id="output-values-nutrition">
@@ -357,8 +383,9 @@
           </div>
         </output>
 
-      </form>
-      <details class="" style="text-align: left;">
+      </div>
+
+      <details class="" style="text-align: left; margin-top: 2rem;">
         <summary>Nutritional Notes</summary>
         <small>
           <ul>
