@@ -156,6 +156,15 @@ function bloodSugarPercentIncrease(averageValue) {
 const carbsInput = document.getElementById("carb-input");
 const proteinInput = document.getElementById("protein-input");
 
+const resetBtnNutrition = document.getElementById("reset-nutrition-input");
+
+resetBtnNutrition.addEventListener("click", () => {
+  carbsInput.value = null;
+  proteinInput.value = null;
+  resetBtnNutrition.style.visibility = "hidden";
+  output.style.visibility = "hidden";
+});
+
 const output = document.getElementById("output-values-nutrition");
 const outputEstimatedInlsulinUnit = document.getElementById("estimated-insulin-unit");
 const outputEstimatedGlucoseIncrease = document.getElementById("estimated-glucose-increase");
@@ -192,6 +201,7 @@ function outputValuesNutrition() {
   `;
 
   output.style.visibility = "visible";
+  resetBtnNutrition.style.visibility = "visible";
 }
 
 carbsInput.addEventListener("keyup", outputValuesNutrition);
