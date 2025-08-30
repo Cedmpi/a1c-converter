@@ -23,8 +23,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/a1c-converter/index.html",
-  "scope": "/a1c-converter/",
+  "start_url": "https://cedmpi.github.io/a1c-converter/index.html",
+  "scope": "https://cedmpi.github.io/a1c-converter/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#fff",
