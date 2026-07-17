@@ -478,6 +478,37 @@
         <label for="reset-weight-input" class="accessible-elem">reset input</label>
       </div>
     </section>
+    
+  <section class="unit-converter">
+  <h3>height converter</h3>
+  <div class="unit-conv-input">
+    <div class="first-unit-div">
+      <label for="first-height-input" class="accessible-elem">first input</label>
+      <!-- Changed type to text to support ' and " notation -->
+      <input placeholder="..." id="first-height-input" type="text">
+      <div>
+        <select id="first-height-select">
+          <option value="feet" selected>Feet</option>
+                  </select>
+        <label for="first-height-select" class="accessible-elem">height select one</label>
+      </div>
+    </div>
+    <span class="equation-sign">&asymp;</span>
+    <div>
+      <label for="second-height-input" class="accessible-elem">second input</label>
+      <input placeholder="..." type="text" id="second-height-input">
+      <div>
+        <select id="second-height-select">
+        <option value="meter">Meter</option>
+          <option value="centimeter">Centimeter</option>
+        </select>
+        <label for="second-height-select" class="accessible-elem">height select two</label>
+      </div>
+    </div>
+    <button id="reset-height-input" type="reset" class="reset-button">&#9587;</button>
+    <label for="reset-height-input" class="accessible-elem">reset input</label>
+  </div>
+</section>
 
     <!-- liquid converter -->
     <section class="unit-converter">
