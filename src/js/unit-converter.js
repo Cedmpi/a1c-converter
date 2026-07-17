@@ -138,3 +138,73 @@ const lengthUnits = {
   inch: 0.0254
 };
 setupConverter("first-length-input", "secound-length-input", "first-length-select", "secound-length-select", "reset-length-input", lengthUnits, "meter");
+
+// --- Height converter (feet.inch → meter/centimeter) ---
+const heightUnits = {
+  meter: 1,
+  centimeter: 0.01
+};
+
+function parseFeetInch(value) {
+  const str = String(value).trim();
+  if (str === "") return null;
+  const parts = str.split(".");
+  const feet = parseInt(parts[0], 10);
+  const inches = parts.length > 1 ? parseInt(parts[1], 10) : 0;
+  if (isNaN(feet) || isNaN(inches) || feet < 0 || inches < 0 || inches > 11) return null;
+  return { feet, inches };
+}
+
+function feetInchToMeter(feet, inches) {
+  return feet * 0.3048 + inches * 0.0254;
+}
+
+function meterToFeetInch(meters) {
+  const totalInches = meters / 0.0254;
+  const feet = Math.floor(totalInches / 12);
+  const inches = Math.round(totalInches % 12);
+  if (inches === 12) { return `${feet + 1}.0`; }
+  return `${feet}.${inches}`;
+}
+
+function setupHeightConverter(firstInputId, secondInputId, firstSelectId, secondSelectId, resetId) {
+  const input1 = document.getElementById(firstInputId);
+  const input2 = document.getElementById(secondInputId);
+  const select1 = document.getElementById(firstSelectId);
+  const select2 = document.getElementById(secondSelectId);
+  const resetBtn = document.getElementById(resetId);
+
+  function convert(event) {
+    resetBtn.style.visibility = "visible";
+    if (event.target === input1 || event.target === select2) {
+      const parsed = parseFeetInch(input1.value);
+      if (!parsed) { input2.value = ""; return; }
+      const meters = feetInchToMeter(parsed.feet, parsed.inches);
+      const toUnit = select2.value;
+      const decimals = toUnit === "centimeter" ? 0 : 2;
+      input2.value = formatNumber(meters / heightUnits[toUnit], decimals);
+    } else if (event.target === input2 || event.target === select1) {
+      const val = parseFloat(input2.value);
+      if (isNaN(val)) { input1.value = ""; return; }
+      const fromUnit = select2.value;
+      const meters = val * heightUnits[fromUnit];
+      input1.value = meterToFeetInch(meters);
+    }
+
+    if (input1.value !== "" && input2.value !== "") {
+      addToHistory(input1.value, select1.value, input2.value, select2.value);
+    }
+  }
+
+  input1.addEventListener("input", convert);
+  input2.addEventListener("input", convert);
+  select1.addEventListener("change", convert);
+  select2.addEventListener("change", convert);
+
+  resetBtn.addEventListener("click", () => {
+    resetBtn.style.visibility = "hidden";
+    input1.value = input2.value = "";
+  });
+}
+
+setupHeightConverter("first-height-input", "second-height-input", "first-height-select", "second-height-select", "reset-height-input");
